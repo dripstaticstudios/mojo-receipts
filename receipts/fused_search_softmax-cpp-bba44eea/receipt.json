@@ -1,0 +1,57 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": null,
+ "observation_id": "bba44eea-2927-410b-8cf9-e55dde0f47f2",
+ "observed_at": "2026-11-23T17:29:17.293002+00:00",
+ "task": {
+  "id": "fused_search_softmax",
+  "title": "Fused embed_search + softmax over top-8 scores, one pass",
+  "request_sha256": "d0575fc122dfc2050c5475aed925238efddbcaf140db68b7def5a03eb43dad08"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "C++",
+  "version": "g++ 13.3.0",
+  "toolchain": "system g++ -O3",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "f7ca84f93498b477c9b1fe30c02bae7f22f9fc32622543bd5fe9a82778c33aeb",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "fused_search_softmax.cpp",
+  "source_sha256": "f7ca84f93498b477c9b1fe30c02bae7f22f9fc32622543bd5fe9a82778c33aeb",
+  "binary_sha256": "200f5332d3ab485924b45f47007902fed7517a9b0ffdec6a1dffc5a633a15918",
+  "build_command": "g++ -O3 -o kernel-bin <source>"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 305469451,
+  "kernel_avg_ns": 150112,
+  "output_sha256": "b125fb7cd5fbe57492a3cb72f498dde44b17936152466991eeeb4b60330a9983",
+  "output": "task = fused_search_softmax\nvectors = 512  dims = 64  k = 8\ntop_idx 0 = 0\ntop_prob 0 = 0.125\ntop_idx 1 = 23\ntop_prob 1 = 0.125\ntop_idx 2 = 46\ntop_prob 2 = 0.125\ntop_idx 3 = 69\ntop_prob 3 = 0.125\ntop_idx 4 = 92\ntop_prob 4 = 0.125\ntop_idx 5 = 115\ntop_prob 5 = 0.125\ntop_idx 6 = 138\ntop_prob 6 = 0.125\ntop_idx 7 = 161\ntop_prob 7 = 0.125\nprob_sum = 1\nunfused_match = 1\niters = 2000\navg_ns = 150112\n",
+  "output_canonical": "task = fused_search_softmax\nvectors = 512  dims = 64  k = 8\ntop_idx 0 = 0\ntop_prob 0 = 0.125\ntop_idx 1 = 23\ntop_prob 1 = 0.125\ntop_idx 2 = 46\ntop_prob 2 = 0.125\ntop_idx 3 = 69\ntop_prob 3 = 0.125\ntop_idx 4 = 92\ntop_prob 4 = 0.125\ntop_idx 5 = 115\ntop_prob 5 = 0.125\ntop_idx 6 = 138\ntop_prob 6 = 0.125\ntop_idx 7 = 161\ntop_prob 7 = 0.125\nprob_sum = 1\nunfused_match = 1\niters = 2000\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ }
+}
