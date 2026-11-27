@@ -1,0 +1,89 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "92743b57-66cb-497a-b1ad-b5a7500c6cd0",
+ "observed_at": "2026-11-26T07:57:18.407067+00:00",
+ "task": {
+  "id": "embed_search",
+  "title": "embed search (existing arena kernel, run as control)",
+  "request_sha256": "51480ef51874a75bebdb0f06982993cbb32b1146ad02dba535b4531b51a0b16a"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "2f7b3eae6e682ed288aea0139a3751cff9a879248725e7ad3653c0e4fb0ed84e",
+   "verdict": "compile_error",
+   "note": "superseded attempt, preserved in harness attempt log"
+  },
+  {
+   "n": 2,
+   "source_sha256": "c93b4519bacf97a21df58004409649f61a6af865b9657c2103b910f4af77f450",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "embed_search.mojo",
+  "source_sha256": "c93b4519bacf97a21df58004409649f61a6af865b9657c2103b910f4af77f450",
+  "binary_sha256": "1aa1736c5805e8af31df66bc49741af09a3676901e558370ae3c2cd42c1f0594",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 922091554,
+  "kernel_avg_ns": 449579,
+  "output_sha256": "e6781be1067ddef8666cced6139022da4227d332eaad59e352206dd1378f175e",
+  "output": "task = embed_search\nvectors = 512  dims = 64\nbest_idx = 0\nbest_score = 0.23181105\niters = 2000\navg_ns = 449579\n",
+  "output_canonical": "task = embed_search\nvectors = 512  dims = 64\nbest_idx = 0\nbest_score = 0.23181105\niters = 2000\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": {
+  "receipt": "/home/hatch/workspace/mojo-arena/receipts/embed_search-cpp-00b1dd4b/receipt.json"
+ },
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ },
+ "oracle": {
+  "status": "pass",
+  "twin_file": "oracle_twin.ijs",
+  "twin_sha256": "14c9388bbb803d32bb1a0ed420f720cf19c40c3fc79cda046473394618fc5880",
+  "twin_source": "oracle/twins/embed_search.ijs",
+  "engine": "J 9.6 (jconsole, arena-bundled oracle/j9.6)",
+  "bands": "integers exact; floats |diff| <= 1e-4 (pre-registered 2026-11-25)",
+  "checks": [
+   {
+    "key": "best_idx",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=0 twin=0"
+   },
+   {
+    "key": "best_score",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.23181105 twin=0.231811 maxdiff=5.00e-08"
+   }
+  ],
+  "report_file": "oracle_report.txt"
+ }
+}
