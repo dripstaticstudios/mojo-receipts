@@ -1,0 +1,68 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "6520ec25-9c19-4a6a-8928-ecdfc7ee8a79",
+ "observed_at": "2026-11-23T05:49:40.552852+00:00",
+ "task": {
+  "id": "softmax",
+  "title": "softmax over 1024 deterministic inputs",
+  "request_sha256": "1d0bf5f73ef9060ce49539abfd7944abf467132679fb98d81512da57e522e177"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "3766c66e4e340cb5ad78e8b285ad63c93d24bbb95afbdc458e5dd3a24db19657",
+   "verdict": "compile_error",
+   "note": "superseded attempt, preserved in harness attempt log"
+  },
+  {
+   "n": 2,
+   "source_sha256": "c9ee2704ad5431e4eafb038752ca8b1fde2249f039e66a53ee76eb583df5ecc2",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "softmax.mojo",
+  "source_sha256": "c9ee2704ad5431e4eafb038752ca8b1fde2249f039e66a53ee76eb583df5ecc2",
+  "binary_sha256": "d29e3b771a2d38d3233be7bd79926618c5cf6e11aabdbb37e3ddc61c19fec21e",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 85833210,
+  "kernel_avg_ns": 7589,
+  "output_sha256": "42c4d247c704e6ac2715a4820436d321aff8659dd3a78f5de5b60d36f1fb3dfe",
+  "output": "task = softmax\nn = 1024\nsum = 1.0000018\nfirst = 6.8472254e-05\niters = 10000\navg_ns = 7589\nacc = 0.6848037\n",
+  "output_canonical": "task = softmax\nn = 1024\nsum = 1.0000018\nfirst = 6.8472254e-05\niters = 10000\nacc = 0.6848037\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": {
+  "receipt": "receipts/softmax-cpp-7cc26262/receipt.json"
+ },
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ }
+}
