@@ -1,0 +1,164 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "16e80a9c-b90a-4694-be84-3ba5c814b1f9",
+ "observed_at": "2026-11-26T07:57:27.913317+00:00",
+ "task": {
+  "id": "fused_search_softmax",
+  "title": "Fused embed_search + softmax over top-8 scores, one pass",
+  "request_sha256": "d0575fc122dfc2050c5475aed925238efddbcaf140db68b7def5a03eb43dad08"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "0bcc6fb8f4ce02cd37668b7abc40b5ffb856bd3a16ba2e9babc348a9c0ec1889",
+   "verdict": "compile_error",
+   "note": "superseded attempt, preserved in harness attempt log"
+  },
+  {
+   "n": 2,
+   "source_sha256": "f88752f74d38c8c83bbd81623ed9ebd43a4574ed0e2408e9f801bde7682431ec",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "fused_search_softmax.mojo",
+  "source_sha256": "f88752f74d38c8c83bbd81623ed9ebd43a4574ed0e2408e9f801bde7682431ec",
+  "binary_sha256": "eeeb578e0c543b2418418b6f4f129c8a3a22f786a34f95adfbf0578412170454",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 864697359,
+  "kernel_avg_ns": 399002,
+  "output_sha256": "a561571987a61e7a59aac20ba882dcc7525db6532d240399fe4757f28a3256e3",
+  "output": "task = fused_search_softmax\nvectors = 512  dims = 64  k = 8\ntop_idx 0 = 0\ntop_prob 0 = 0.125\ntop_idx 1 = 23\ntop_prob 1 = 0.125\ntop_idx 2 = 46\ntop_prob 2 = 0.125\ntop_idx 3 = 69\ntop_prob 3 = 0.125\ntop_idx 4 = 92\ntop_prob 4 = 0.125\ntop_idx 5 = 115\ntop_prob 5 = 0.125\ntop_idx 6 = 138\ntop_prob 6 = 0.125\ntop_idx 7 = 161\ntop_prob 7 = 0.125\nprob_sum = 1.0\nunfused_match = 1\niters = 2000\navg_ns = 399002\n",
+  "output_canonical": "task = fused_search_softmax\nvectors = 512  dims = 64  k = 8\ntop_idx 0 = 0\ntop_prob 0 = 0.125\ntop_idx 1 = 23\ntop_prob 1 = 0.125\ntop_idx 2 = 46\ntop_prob 2 = 0.125\ntop_idx 3 = 69\ntop_prob 3 = 0.125\ntop_idx 4 = 92\ntop_prob 4 = 0.125\ntop_idx 5 = 115\ntop_prob 5 = 0.125\ntop_idx 6 = 138\ntop_prob 6 = 0.125\ntop_idx 7 = 161\ntop_prob 7 = 0.125\nprob_sum = 1.0\nunfused_match = 1\niters = 2000\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": {
+  "receipt": "/home/hatch/workspace/mojo-arena/receipts/fused_search_softmax-cpp-a5308669/receipt.json"
+ },
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ },
+ "oracle": {
+  "status": "pass",
+  "twin_file": "oracle_twin.ijs",
+  "twin_sha256": "7675230a5a00a586068b832b4d3bf38077014be68fadd11bb749f2a69f79b402",
+  "twin_source": "oracle/twins/fused_search_softmax.ijs",
+  "engine": "J 9.6 (jconsole, arena-bundled oracle/j9.6)",
+  "bands": "integers exact; floats |diff| <= 1e-4 (pre-registered 2026-11-25)",
+  "checks": [
+   {
+    "key": "top_idx 0",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=0 twin=0"
+   },
+   {
+    "key": "top_prob 0",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "top_idx 1",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=23 twin=23"
+   },
+   {
+    "key": "top_prob 1",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "top_idx 2",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=46 twin=46"
+   },
+   {
+    "key": "top_prob 2",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "top_idx 3",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=69 twin=69"
+   },
+   {
+    "key": "top_prob 3",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "top_idx 4",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=92 twin=92"
+   },
+   {
+    "key": "top_prob 4",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "top_idx 5",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=115 twin=115"
+   },
+   {
+    "key": "top_prob 5",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "top_idx 6",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=138 twin=138"
+   },
+   {
+    "key": "top_prob 6",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "top_idx 7",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=161 twin=161"
+   },
+   {
+    "key": "top_prob 7",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.125 twin=0.125 maxdiff=0.00e+00"
+   },
+   {
+    "key": "prob_sum",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=1.0 twin=1 maxdiff=0.00e+00"
+   }
+  ],
+  "report_file": "oracle_report.txt"
+ }
+}
