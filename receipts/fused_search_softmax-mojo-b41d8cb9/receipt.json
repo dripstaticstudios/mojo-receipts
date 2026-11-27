@@ -1,0 +1,60 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "b41d8cb9-d817-45c4-b2a5-58a249a78279",
+ "observed_at": "2026-11-23T17:29:14.741349+00:00",
+ "task": {
+  "id": "fused_search_softmax",
+  "title": "Fused embed_search + softmax over top-8 scores, one pass",
+  "request_sha256": "d0575fc122dfc2050c5475aed925238efddbcaf140db68b7def5a03eb43dad08"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "f88752f74d38c8c83bbd81623ed9ebd43a4574ed0e2408e9f801bde7682431ec",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "fused_search_softmax.mojo",
+  "source_sha256": "f88752f74d38c8c83bbd81623ed9ebd43a4574ed0e2408e9f801bde7682431ec",
+  "binary_sha256": "eeeb578e0c543b2418418b6f4f129c8a3a22f786a34f95adfbf0578412170454",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 242126196,
+  "kernel_avg_ns": 127693,
+  "output_sha256": "a561571987a61e7a59aac20ba882dcc7525db6532d240399fe4757f28a3256e3",
+  "output": "task = fused_search_softmax\nvectors = 512  dims = 64  k = 8\ntop_idx 0 = 0\ntop_prob 0 = 0.125\ntop_idx 1 = 23\ntop_prob 1 = 0.125\ntop_idx 2 = 46\ntop_prob 2 = 0.125\ntop_idx 3 = 69\ntop_prob 3 = 0.125\ntop_idx 4 = 92\ntop_prob 4 = 0.125\ntop_idx 5 = 115\ntop_prob 5 = 0.125\ntop_idx 6 = 138\ntop_prob 6 = 0.125\ntop_idx 7 = 161\ntop_prob 7 = 0.125\nprob_sum = 1.0\nunfused_match = 1\niters = 2000\navg_ns = 127693\n",
+  "output_canonical": "task = fused_search_softmax\nvectors = 512  dims = 64  k = 8\ntop_idx 0 = 0\ntop_prob 0 = 0.125\ntop_idx 1 = 23\ntop_prob 1 = 0.125\ntop_idx 2 = 46\ntop_prob 2 = 0.125\ntop_idx 3 = 69\ntop_prob 3 = 0.125\ntop_idx 4 = 92\ntop_prob 4 = 0.125\ntop_idx 5 = 115\ntop_prob 5 = 0.125\ntop_idx 6 = 138\ntop_prob 6 = 0.125\ntop_idx 7 = 161\ntop_prob 7 = 0.125\nprob_sum = 1.0\nunfused_match = 1\niters = 2000\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ }
+}
