@@ -1,0 +1,66 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "55e42a9a-42c6-4e67-a96b-19caceb7a0dd",
+ "observed_at": "2026-11-26T08:39:59.178655+00:00",
+ "task": {
+  "id": "scale_repair_1m",
+  "title": "Impossible Search scale test: exact top-10 repair for a tracked query after real-text edits, embedding timed in-measurement, 1000384 passages",
+  "request_sha256": "1b1f93f3e8da54d602429b0946aa6ab1b36f48a061bb19c08a64329fe7699c7b"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "5a8d07586ffdbefef279d4ae70e5526ee430645042b3553647b8913970641606",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "scale_repair_1m.mojo",
+  "source_sha256": "5a8d07586ffdbefef279d4ae70e5526ee430645042b3553647b8913970641606",
+  "binary_sha256": "bdbc4de1d511becd9987bb145ad2f6f46bff7a6ce40c7979b7223ecd9f582834",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 2,
+  "median_wall_ns": 27929392891,
+  "kernel_avg_ns": 915887437,
+  "output_sha256": "2e845c1bc9dde2027c137b8c3a758298ff9ce050c334fd99cbaf51f357e88600",
+  "output": "task = scale_repair_1m\npassages = 1000384  dims = 256  block_size = 48  blocks = 20842  k = 10\nquery = elizabeth darcy marriage proposal\navg_ns cache_build = 934006789\ncache_blocks = 20842\navg_ns trial regime= sparse1  trial= 0  embed= 33941  repair= 5110940  scan= 912202427\nresult regime= sparse1  trial= 0  edits= 1  blocks= 1  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= sparse1  trial= 1  embed= 33250  repair= 5030048  scan= 928280206\nresult regime= sparse1  trial= 1  edits= 1  blocks= 1  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= sparse1  trial= 2  embed= 30686  repair= 5077820  scan= 982794435\nresult regime= sparse1  trial= 2  edits= 1  blocks= 1  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= sparse1  trials= 3  exact_trials= 3\navg_ns trial regime= sparse8  trial= 0  embed= 216004  repair= 5749538  scan= 915887437\nresult regime= sparse8  trial= 0  edits= 8  blocks= 8  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= sparse8  trial= 1  embed= 215243  repair= 5405532  scan= 904888731\nresult regime= sparse8  trial= 1  edits= 8  blocks= 8  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= sparse8  trial= 2  embed= 217707  repair= 5378512  scan= 905182192\nresult regime= sparse8  trial= 2  edits= 8  blocks= 8  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= sparse8  trials= 3  exact_trials= 3\navg_ns trial regime= medium  trial= 0  embed= 27271376  repair= 49600816  scan= 944723362\nresult regime= medium  trial= 0  edits= 1042  blocks= 1042  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= medium  trial= 1  embed= 27603645  repair= 50988579  scan= 946816202\nresult regime= medium  trial= 1  edits= 1042  blocks= 1042  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= medium  trial= 2  embed= 26971085  repair= 49924652  scan= 905988742\nresult regime= medium  trial= 2  edits= 1042  blocks= 1042  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= medium  trials= 3  exact_trials= 3\navg_ns trial regime= broad  trial= 0  embed= 299403867  repair= 453955142  scan= 915688588\nresult regime= broad  trial= 0  edits= 10421  blocks= 10421  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= broad  trial= 1  embed= 268024706  repair= 466175843  scan= 946978536\nresult regime= broad  trial= 1  edits= 10421  blocks= 10421  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\navg_ns trial regime= broad  trial= 2  embed= 270786661  repair= 459048827  scan= 907389454\nresult regime= broad  trial= 2  edits= 10421  blocks= 10421  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= broad  trials= 3  exact_trials= 3\navg_ns = 915887437\n",
+  "output_canonical": "task = scale_repair_1m\npassages = 1000384  dims = 256  block_size = 48  blocks = 20842  k = 10\nquery = elizabeth darcy marriage proposal\ncache_blocks = 20842\nresult regime= sparse1  trial= 0  edits= 1  blocks= 1  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= sparse1  trial= 1  edits= 1  blocks= 1  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= sparse1  trial= 2  edits= 1  blocks= 1  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= sparse1  trials= 3  exact_trials= 3\nresult regime= sparse8  trial= 0  edits= 8  blocks= 8  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= sparse8  trial= 1  edits= 8  blocks= 8  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= sparse8  trial= 2  edits= 8  blocks= 8  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= sparse8  trials= 3  exact_trials= 3\nresult regime= medium  trial= 0  edits= 1042  blocks= 1042  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= medium  trial= 1  edits= 1042  blocks= 1042  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= medium  trial= 2  edits= 1042  blocks= 1042  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= medium  trials= 3  exact_trials= 3\nresult regime= broad  trial= 0  edits= 10421  blocks= 10421  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= broad  trial= 1  edits= 10421  blocks= 10421  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nresult regime= broad  trial= 2  edits= 10421  blocks= 10421  exact= 1  max_delta= 0.0  top10= 11323,22459,33595,44731,55867,67003,78139,89275,100411,111547\nsummary regime= broad  trials= 3  exact_trials= 3\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ },
+ "oracle": {
+  "status": "exempt",
+  "reason": "Scale benchmark over external real-text corpus files (1M passages, ~1.02 GB of vectors) - not an in-program synthetic task a J twin can replay. Exactness is refereed in-program on every trial by a full brute-force scan of the same working array; the canonical receipt output carries the per-trial exact verdicts and top-10 indices.",
+  "twin_file": null,
+  "note": "exemption declared at cut time and recorded permanently; this receipt was NOT refereed by a J twin"
+ }
+}
