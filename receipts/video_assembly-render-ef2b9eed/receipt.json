@@ -1,0 +1,101 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "render-job",
+  "version": "0.1"
+ },
+ "observation_id": "ef2b9eed-d051-4660-8454-30a74accf655",
+ "observed_at": "2026-11-24T17:59:50.239635+00:00",
+ "task": {
+  "id": "video_assembly",
+  "title": "ffmpeg assembly of Mojo receipts video v1",
+  "request_sha256": "a3bfda59ad518f19bbfa11e9f22ed18c35c2cb926541d46bbfeba89a77eedf28"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "ffmpeg",
+  "version": "8.1.2"
+ },
+ "artifacts": {
+  "script_file": "stage_assembly.py",
+  "script_sha256": "acd7e8eb48a38c8984960f7a37f12a216d404b1d3cd3ce75cb04da455e6b8c7a",
+  "inputs": [
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/frames_manifest.json",
+    "sha256": "dc83e5c93e4d33f51847e9154815ee2d04f0370fb979c5c136000066784ffe1a"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narration.mp3",
+    "sha256": "bbf5b749ca98629f8e2b0c939028e1e6f46dca52c7b88dec77b4367dd0f4d847"
+   }
+  ],
+  "command": [
+   "ffmpeg",
+   "-y",
+   "-framerate",
+   "30",
+   "-i",
+   "/home/hatch/workspace/mojo-arena/video-pipeline/work/frames/f%05d.png",
+   "-i",
+   "/home/hatch/workspace/mojo-arena/video-pipeline/work/narration.mp3",
+   "-c:v",
+   "libx264",
+   "-pix_fmt",
+   "yuv420p",
+   "-crf",
+   "20",
+   "-preset",
+   "slow",
+   "-maxrate",
+   "6M",
+   "-bufsize",
+   "12M",
+   "-c:a",
+   "aac",
+   "-b:a",
+   "160k",
+   "-movflags",
+   "+faststart",
+   "/home/hatch/workspace/mojo-arena/video-pipeline/mojo-receipts-v1.mp4"
+  ],
+  "outputs": [
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/mojo-receipts-v1.mp4",
+    "sha256": "0b0a5cfd390ecca112f93e1bbaa38a640718daeb4e311835680417af79a77dad",
+    "bytes": 1614529
+   }
+  ]
+ },
+ "facts": {
+  "duration_s": 72.533008,
+  "size_bytes": 1614529,
+  "video": {
+   "codec": "h264",
+   "width": 1280,
+   "height": 720,
+   "pix_fmt": "yuv420p",
+   "fps": "30/1"
+  },
+  "audio": {
+   "codec": "aac"
+  },
+  "encode_command": "ffmpeg -y -framerate 30 -i /home/hatch/workspace/mojo-arena/video-pipeline/work/frames/f%05d.png -i /home/hatch/workspace/mojo-arena/video-pipeline/work/narration.mp3 -c:v libx264 -pix_fmt yuv420p -crf 20 -preset slow -maxrate 6M -bufsize 12M -c:a aac -b:a 160k -movflags +faststart /home/hatch/workspace/mojo-arena/video-pipeline/mojo-receipts-v1.mp4"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash script/inputs/outputs and compare; deterministic stages re-run and output-compared",
+  "verifier": "verify_render.py v0.1"
+ }
+}
