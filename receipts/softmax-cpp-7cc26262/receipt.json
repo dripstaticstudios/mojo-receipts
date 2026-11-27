@@ -1,0 +1,57 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": null,
+ "observation_id": "7cc26262-e6c8-457e-ade0-f5b973cca74c",
+ "observed_at": "2026-11-23T05:49:36.568998+00:00",
+ "task": {
+  "id": "softmax",
+  "title": "softmax over 1024 deterministic inputs",
+  "request_sha256": "1d0bf5f73ef9060ce49539abfd7944abf467132679fb98d81512da57e522e177"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "C++",
+  "version": "g++ 13.3.0",
+  "toolchain": "system g++ -O3",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "627fa471d3ee1135030f44535844a0acd56b462e4769aa3c5af051dd26723817",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "softmax.cpp",
+  "source_sha256": "627fa471d3ee1135030f44535844a0acd56b462e4769aa3c5af051dd26723817",
+  "binary_sha256": "32c9443ae1cf97b919de99b7ff39014aa0941a270575bd4ac98add7ffcdcd791",
+  "build_command": "g++ -O3 -o kernel-bin <source>"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 83594851,
+  "kernel_avg_ns": 8039,
+  "output_sha256": "a2fc17f6776b56c3803f69f9c4574ee30305de31d2c1eb13ba8b3cc15626ade6",
+  "output": "task = softmax\nn = 1024\nsum = 1.00000179\nfirst = 6.84722545e-05\niters = 10000\navg_ns = 8039\nacc = 0.684803724\n",
+  "output_canonical": "task = softmax\nn = 1024\nsum = 1.00000179\nfirst = 6.84722545e-05\niters = 10000\nacc = 0.684803724\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ }
+}
