@@ -1,0 +1,84 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": null,
+ "observation_id": "00b1dd4b-256c-4929-acd0-eaeeed57ea5c",
+ "observed_at": "2026-11-26T07:56:34.214855+00:00",
+ "task": {
+  "id": "embed_search",
+  "title": "cosine top-1 search, 512 vectors x 64 dims",
+  "request_sha256": "355043106a2f47d386c391da5e38cfecf37a21fb26f170baaa3b57b3ecdebb03"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "C++",
+  "version": "g++ 13.3.0",
+  "toolchain": "system g++ -O3",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "b8f16c18c45980db391b60dd52f20d22e20449931b381543096366fb5299feb5",
+   "verdict": "compile_error",
+   "note": "superseded attempt, preserved in harness attempt log"
+  },
+  {
+   "n": 2,
+   "source_sha256": "3ceef535740c1c06da705c9ca65d0e7b49568c8acf43a8b10ffa7ae2bb1f86e2",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "embed_search.cpp",
+  "source_sha256": "3ceef535740c1c06da705c9ca65d0e7b49568c8acf43a8b10ffa7ae2bb1f86e2",
+  "binary_sha256": "2f6f812d334aaa8b2d813bb693a79dccc54ce5649ba5ae8edde96153ce5bed0a",
+  "build_command": "g++ -O3 -o kernel-bin <source>"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 702879555,
+  "kernel_avg_ns": 540844,
+  "output_sha256": "ed668599b9a10413cf97cc710e75bc2a7036922e631c84bb1813844da586c8f2",
+  "output": "task = embed_search\nvectors = 512  dims = 64\nbest_idx = 0\nbest_score = 0.231811062\niters = 2000\navg_ns = 540844\n",
+  "output_canonical": "task = embed_search\nvectors = 512  dims = 64\nbest_idx = 0\nbest_score = 0.231811062\niters = 2000\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ },
+ "oracle": {
+  "status": "pass",
+  "twin_file": "oracle_twin.ijs",
+  "twin_sha256": "14c9388bbb803d32bb1a0ed420f720cf19c40c3fc79cda046473394618fc5880",
+  "twin_source": "oracle/twins/embed_search.ijs",
+  "engine": "J 9.6 (jconsole, arena-bundled oracle/j9.6)",
+  "bands": "integers exact; floats |diff| <= 1e-4 (pre-registered 2026-11-25)",
+  "checks": [
+   {
+    "key": "best_idx",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=0 twin=0"
+   },
+   {
+    "key": "best_score",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=0.231811062 twin=0.231811 maxdiff=6.20e-08"
+   }
+  ],
+  "report_file": "oracle_report.txt"
+ }
+}
