@@ -1,0 +1,76 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "394ed739-d507-48d5-be02-5b264dccd32f",
+ "observed_at": "2026-11-26T08:00:55.000018+00:00",
+ "task": {
+  "id": "logsumexp",
+  "title": "logsumexp over 2048 deterministic inputs",
+  "request_sha256": "85bae70edabbc44aef464999e9af0b2fcbe579db8b48532bdff9519de29227ec"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "d89fa5616a06971467879ddcb830f3b805b9fc843c906f417589b8bb82480cf0",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "logsumexp.mojo",
+  "source_sha256": "d89fa5616a06971467879ddcb830f3b805b9fc843c906f417589b8bb82480cf0",
+  "binary_sha256": "67018fd68d92816e99dfdfd9b2f510180e258d73658bb61aa394df99872049f9",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 896093745,
+  "kernel_avg_ns": 44989,
+  "output_sha256": "c55426cbdb734c9c0d3947c47cfef8e128132e34bfaef5ed3f69c3034b89ff6e",
+  "output": "task = logsumexp\nn = 2048\nlogsumexp = 8.258506\niters = 20000\navg_ns = 44989\n",
+  "output_canonical": "task = logsumexp\nn = 2048\nlogsumexp = 8.258506\niters = 20000\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ },
+ "oracle": {
+  "status": "pass",
+  "twin_file": "oracle_twin.ijs",
+  "twin_sha256": "d7c84e8936371e457ce4e58857489c169a614a907a7516d55bb79e0b335f9e4a",
+  "twin_source": "oracle/twins/logsumexp.ijs",
+  "engine": "J 9.6 (jconsole, arena-bundled oracle/j9.6)",
+  "bands": "integers exact; floats |diff| <= 1e-4 (pre-registered 2026-11-25)",
+  "checks": [
+   {
+    "key": "logsumexp",
+    "verdict": "PASS",
+    "detail": "float tol 0.0001: kernel=8.258506 twin=8.25851 maxdiff=4.00e-06"
+   }
+  ],
+  "report_file": "oracle_report.txt"
+ }
+}
