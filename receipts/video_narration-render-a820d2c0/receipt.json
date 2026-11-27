@@ -1,0 +1,118 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "render-job",
+  "version": "0.1"
+ },
+ "observation_id": "a820d2c0-09fc-4df2-bcd8-ceabefd9948a",
+ "observed_at": "2026-11-24T17:47:08.853269+00:00",
+ "task": {
+  "id": "video_narration",
+  "title": "TTS narration for Mojo receipts video (Helio, per-sentence)",
+  "request_sha256": "3c341ed6147d21e3adfb33de18fef9463bbb1517e14c142ee904303c9db052e4"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Muse TTS",
+  "version": "avocado_v2:MAI_03 (Helio)"
+ },
+ "artifacts": {
+  "script_file": "stage_narration.py",
+  "script_sha256": "ff66a3dfb668a392de4817f4f018e6672872ff1249536c35a808b5cc630afbf6",
+  "inputs": [
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/narration.txt",
+    "sha256": "188ccc326d09a612340d51808ebc47946f239dad9bbbe996f4b0f1af04e42a63"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s00.mp3",
+    "sha256": "705d41e5da77ecfc4ec899039b35c2bc374f52368ed87cbc35c38ca318772807"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s01.mp3",
+    "sha256": "47012c1c6db23cb77e3a849083c8da64f0c369c098237010200ffdc1773b2b99"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s02.mp3",
+    "sha256": "021023ea1b14679b4df6c7515dde6f46fd29dc91f40118dcb01cb895b442af24"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s03.mp3",
+    "sha256": "2265d62d318cae0558ec9b210161409122e3eee48f898a0b8d70a159ec35ef3d"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s04.mp3",
+    "sha256": "a634159fe07e41f9d7f072e32075c05cb2d4cf5fe7786614e337deca27b24b87"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s05.mp3",
+    "sha256": "39997eef0e664e8676e003f812c79fde10c01896591771edabc4668b7b82efeb"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s06.mp3",
+    "sha256": "7c8aef366a909479de07da8d9a28668f7ee8fc0d20b64a65dc4e4843ea276934"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s07.mp3",
+    "sha256": "9cbbbf1dc7b1c8e22629d2e813df5f6a772856320b462badca1f7b1457e8bfe5"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s08.mp3",
+    "sha256": "7f9e6780b1a0d1945d1560c222146eedc9641d0f37f6def6ec76232c78b4936d"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s09.mp3",
+    "sha256": "1a20e246bff1ad7ed9e75a62da36dfef278955e0b8713f04d56fb934c639f9a9"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narr_segments/s10.mp3",
+    "sha256": "b1de3181b5d34788304d752b2fdcc74d39e4c1350e9a18e13aafce7ec396ebf6"
+   }
+  ],
+  "command": [
+   "/opt/hatch/bin/tts",
+   "speak",
+   "--voice",
+   "avocado_v2:MAI_03",
+   "--text-stdin",
+   "(per sentence)",
+   "+ ffmpeg concat"
+  ],
+  "outputs": [
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narration.mp3",
+    "sha256": "af89b627b31876905ed83677edb5c12270bfa40606d86f72ec041e4b121aa7fb",
+    "bytes": 1434285
+   }
+  ]
+ },
+ "facts": {
+  "duration_s": 71.628917,
+  "format": "mp3",
+  "streams": [
+   {
+    "codec": "mp3"
+   }
+  ],
+  "segments": 11,
+  "gap_s": 0.12,
+  "render_mode": "per-sentence + concat (single-request render failed partway; colon-form sentence trips the TTS backend \u2014 see RESULTS.md)"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash script/inputs/outputs and compare; deterministic stages re-run and output-compared",
+  "verifier": "verify_render.py v0.1"
+ }
+}
