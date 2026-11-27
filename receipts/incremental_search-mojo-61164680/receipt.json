@@ -1,0 +1,60 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "61164680-8512-40ca-870d-e40785d44922",
+ "observed_at": "2026-11-23T17:32:29.736122+00:00",
+ "task": {
+  "id": "incremental_search",
+  "title": "Tier 1 incremental exact top-k: block cache + repair vs full scan, Mojo",
+  "request_sha256": "c20e054634000b7f31cc930f6ae33a7acc062a9af973ae35705c91880efa54ec"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "f7c2f9ef2513524fd9b8b4ce35ce0523bfa0102692b6d61f9ea02018c6bc2147",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "incremental_search.mojo",
+  "source_sha256": "f7c2f9ef2513524fd9b8b4ce35ce0523bfa0102692b6d61f9ea02018c6bc2147",
+  "binary_sha256": "91260310ffd446076e88d15d107d6379de60a18c0972aa98bde782842df1b139",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 327206914,
+  "kernel_avg_ns": 150798,
+  "output_sha256": "8ab34f774216543e4c422c659e94846997e69586faf31c38a46a0642ce5d9d67",
+  "output": "task = incremental_search\nvectors = 512  dims = 64  block_size = 8  blocks = 64  k = 8\nbatches_checked = 150\nmismatches = 0\nfinal_top_idx 0 = 23\nfinal_top_idx 1 = 46\nfinal_top_idx 2 = 69\nfinal_top_idx 3 = 92\nfinal_top_idx 4 = 115\nfinal_top_idx 5 = 138\nfinal_top_idx 6 = 161\nfinal_top_idx 7 = 184\navg_ns repair_blocks 1 = 14538\navg_ns fullscan_blocks 1 = 123242\navg_ns repair_blocks 2 = 17279\navg_ns fullscan_blocks 2 = 128475\navg_ns repair_blocks 4 = 23302\navg_ns fullscan_blocks 4 = 138798\navg_ns repair_blocks 8 = 35135\navg_ns fullscan_blocks 8 = 155282\navg_ns repair_blocks 16 = 57755\navg_ns fullscan_blocks 16 = 155304\navg_ns repair_blocks 32 = 107145\navg_ns fullscan_blocks 32 = 149468\navg_ns repair_blocks 64 = 194156\navg_ns fullscan_blocks 64 = 150798\navg_ns = 150798\n",
+  "output_canonical": "task = incremental_search\nvectors = 512  dims = 64  block_size = 8  blocks = 64  k = 8\nbatches_checked = 150\nmismatches = 0\nfinal_top_idx 0 = 23\nfinal_top_idx 1 = 46\nfinal_top_idx 2 = 69\nfinal_top_idx 3 = 92\nfinal_top_idx 4 = 115\nfinal_top_idx 5 = 138\nfinal_top_idx 6 = 161\nfinal_top_idx 7 = 184\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ }
+}
