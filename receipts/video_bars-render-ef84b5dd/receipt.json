@@ -1,0 +1,62 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "render-job",
+  "version": "0.1"
+ },
+ "observation_id": "ef84b5dd-5604-476b-972e-2b0955937ec6",
+ "observed_at": "2026-11-24T17:35:47.052032+00:00",
+ "task": {
+  "id": "video_bars",
+  "title": "Uiua bout-bar geometry for video bouts scene",
+  "request_sha256": "8bb7f65be69f400037d3e04168956d4c489aa9c25431e0804017078cc9edaf01"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Uiua",
+  "version": "0.19.1"
+ },
+ "artifacts": {
+  "script_file": "bars.ua",
+  "script_sha256": "64681103a84f8f2cfa93b192298b1ad53458358f5a33f2c95829c03e88572020",
+  "inputs": [],
+  "command": [
+   "/home/hatch/workspace/language-pairings/demo4-alien/tools/uiua-bin/uiua",
+   "run",
+   "/home/hatch/workspace/mojo-arena/video-pipeline/bars.ua"
+  ],
+  "outputs": [
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/uiua_out.txt",
+    "sha256": "26ec229bf355f24f7bf8112dd20ad66ebcf09d44f80c59048e4a4807c17827ea",
+    "bytes": 69
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/bars.json",
+    "sha256": "7e7d09694bae1b445e4783043ccca3f8eda9d299eb2a594ad3a25b5f14c70676",
+    "bytes": 777
+   }
+  ]
+ },
+ "facts": {
+  "deterministic_rerun": "identical stdout on 2 runs",
+  "bouts": 3
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash script/inputs/outputs and compare; deterministic stages re-run and output-compared",
+  "verifier": "verify_render.py v0.1"
+ }
+}
