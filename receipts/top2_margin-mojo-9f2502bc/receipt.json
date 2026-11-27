@@ -1,0 +1,60 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "9f2502bc-6521-44a4-8cc8-e379d3f06904",
+ "observed_at": "2026-11-23T17:41:01.548724+00:00",
+ "task": {
+  "id": "top2_margin",
+  "title": "top-2 margin scoring variant, generated on demand",
+  "request_sha256": "9f4ab033ae78d0c9b4d28d54af83f26b23b658f52fd505d9f880001ff2dbde8b"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "32330c056bf03dbe7b0eb088bc20b1bdc81e60b2ac75c7d09d9c4a00129292a8",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "top2_margin.mojo",
+  "source_sha256": "32330c056bf03dbe7b0eb088bc20b1bdc81e60b2ac75c7d09d9c4a00129292a8",
+  "binary_sha256": "262570023259d45c8a237438307e1083e519ea52b4e7ee7c3f9f7d2fd4c20987",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 284724957,
+  "kernel_avg_ns": 136562,
+  "output_sha256": "e349b8be314f20b62abf2136633fd3d56300c0837f3b3cf1d98232731887b460",
+  "output": "task = top2_margin\nvectors = 512  dims = 64\nbest_idx = 0\nbest_score = 0.23181105\nsecond_idx = 23\nsecond_score = 0.23181105\nmargin = 0.0\niters = 2000\navg_ns = 136562\n",
+  "output_canonical": "task = top2_margin\nvectors = 512  dims = 64\nbest_idx = 0\nbest_score = 0.23181105\nsecond_idx = 23\nsecond_score = 0.23181105\nmargin = 0.0\niters = 2000\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ }
+}
