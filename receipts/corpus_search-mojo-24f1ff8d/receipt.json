@@ -1,0 +1,60 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "mojo-credit",
+  "version": "0.1"
+ },
+ "observation_id": "24f1ff8d-c826-435d-9905-230c566a53fd",
+ "observed_at": "2026-11-23T17:47:29.590085+00:00",
+ "task": {
+  "id": "corpus_search",
+  "title": "incremental exact search over the SourceToMe corpus (1856 passages, hashed TF-IDF, 60-edit gate + crossover sweep)",
+  "request_sha256": "e0715d0142a70b6cf54790b5012c5378f55ba0a8d0ead5b90f6e635dacc59191"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Mojo",
+  "version": "Mojo 1.2.0 (2016d0cd)",
+  "toolchain": "pixi \u00b7 conda.modular.com/max (stable)",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "24a74b2475d2a133d3811740cfa335cc711246488b60e6cd796e31de363608f0",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "corpus_search.mojo",
+  "source_sha256": "24a74b2475d2a133d3811740cfa335cc711246488b60e6cd796e31de363608f0",
+  "binary_sha256": "7938c702aa0ce4b9b3d747c6d6c907e786fe540dcbfa69cb327ca0411c574044",
+  "build_command": "mojo build <source> -o kernel-bin"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 539483214,
+  "kernel_avg_ns": 1620623,
+  "output_sha256": "eb5f0e2c86c81fc35a0756a4bd0e693563a7a9b3b0eedb0f67d7b91fec2313b4",
+  "output": "task = corpus_search\npassages = 1856  dims = 256  block_size = 48  blocks = 39  k = 10\nedit_batches = 60\nbatches_checked = 60\nmismatches = 0\nprobe 0 top 0 = 949 0.34716046\nprobe 0 top 1 = 116 0.3328867\nprobe 0 top 2 = 1 0.32039633\nprobe 0 top 3 = 1648 0.31203672\nprobe 0 top 4 = 952 0.29221028\nprobe 1 top 0 = 1811 0.29916126\nprobe 1 top 1 = 1021 0.2989308\nprobe 1 top 2 = 1497 0.25194824\nprobe 1 top 3 = 1187 0.24202694\nprobe 1 top 4 = 1007 0.23418541\nprobe 2 top 0 = 1834 0.35941002\nprobe 2 top 1 = 1830 0.3195995\nprobe 2 top 2 = 1833 0.31559768\nprobe 2 top 3 = 87 0.29734615\nprobe 2 top 4 = 1606 0.2853675\navg_ns repair_blocks 1 = 54266\navg_ns fullscan_blocks 1 = 1615580\navg_ns repair_blocks 2 = 98836\navg_ns fullscan_blocks 2 = 1616996\navg_ns repair_blocks 4 = 184380\navg_ns fullscan_blocks 4 = 1624306\navg_ns repair_blocks 8 = 357424\navg_ns fullscan_blocks 8 = 1612378\navg_ns repair_blocks 16 = 700334\navg_ns fullscan_blocks 16 = 1623534\navg_ns repair_blocks 32 = 1396559\navg_ns fullscan_blocks 32 = 1622691\navg_ns repair_blocks 39 = 1699628\navg_ns fullscan_blocks 39 = 1620623\navg_ns = 1620623\n",
+  "output_canonical": "task = corpus_search\npassages = 1856  dims = 256  block_size = 48  blocks = 39  k = 10\nedit_batches = 60\nbatches_checked = 60\nmismatches = 0\nprobe 0 top 0 = 949 0.34716046\nprobe 0 top 1 = 116 0.3328867\nprobe 0 top 2 = 1 0.32039633\nprobe 0 top 3 = 1648 0.31203672\nprobe 0 top 4 = 952 0.29221028\nprobe 1 top 0 = 1811 0.29916126\nprobe 1 top 1 = 1021 0.2989308\nprobe 1 top 2 = 1497 0.25194824\nprobe 1 top 3 = 1187 0.24202694\nprobe 1 top 4 = 1007 0.23418541\nprobe 2 top 0 = 1834 0.35941002\nprobe 2 top 1 = 1830 0.3195995\nprobe 2 top 2 = 1833 0.31559768\nprobe 2 top 3 = 87 0.29734615\nprobe 2 top 4 = 1606 0.2853675\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ }
+}
