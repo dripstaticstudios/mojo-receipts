@@ -1,0 +1,114 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": null,
+ "observation_id": "1e01ee7d-d08e-4e7a-9979-d6e8f5596dae",
+ "observed_at": "2026-11-26T07:56:49.733506+00:00",
+ "task": {
+  "id": "incremental_search",
+  "title": "Tier 1 incremental exact top-k: block cache + repair vs full scan, C++",
+  "request_sha256": "ebf9b37e851e4f4c289d6e1ecc2bbec43e9951133fabaa810c451a3ee286a661"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "C++",
+  "version": "g++ 13.3.0",
+  "toolchain": "system g++ -O3",
+  "target": "cpu x86-64 (AVX2/FMA/AVX512F)"
+ },
+ "attempts": [
+  {
+   "n": 1,
+   "source_sha256": "b91549cf4818f508d43e0a63257101be86ab2723d8562c60fa1b69ab382a6128",
+   "verdict": "compile_error",
+   "note": "superseded attempt, preserved in harness attempt log"
+  },
+  {
+   "n": 2,
+   "source_sha256": "d8d1b2acfc6ba91c49e6380cd8aa38a3871a532765f8455d327f75d9bd6867d7",
+   "verdict": "ok"
+  }
+ ],
+ "artifacts": {
+  "source_file": "incremental_search.cpp",
+  "source_sha256": "d8d1b2acfc6ba91c49e6380cd8aa38a3871a532765f8455d327f75d9bd6867d7",
+  "binary_sha256": "e5ce495d2760e0d9c69213077dbb9f95f7643d0897cef498a9a96a3a5ed9609c",
+  "build_command": "g++ -O3 -o kernel-bin <source>"
+ },
+ "execution": {
+  "runs": 5,
+  "median_wall_ns": 909604733,
+  "kernel_avg_ns": 410928,
+  "output_sha256": "8ab34f774216543e4c422c659e94846997e69586faf31c38a46a0642ce5d9d67",
+  "output": "task = incremental_search\nvectors = 512  dims = 64  block_size = 8  blocks = 64  k = 8\nbatches_checked = 150\nmismatches = 0\nfinal_top_idx 0 = 23\nfinal_top_idx 1 = 46\nfinal_top_idx 2 = 69\nfinal_top_idx 3 = 92\nfinal_top_idx 4 = 115\nfinal_top_idx 5 = 138\nfinal_top_idx 6 = 161\nfinal_top_idx 7 = 184\navg_ns repair_blocks 1 = 13989\navg_ns fullscan_blocks 1 = 597028\navg_ns repair_blocks 2 = 11727\navg_ns fullscan_blocks 2 = 395201\navg_ns repair_blocks 4 = 18717\navg_ns fullscan_blocks 4 = 455976\navg_ns repair_blocks 8 = 45431\navg_ns fullscan_blocks 8 = 503063\navg_ns repair_blocks 16 = 51451\navg_ns fullscan_blocks 16 = 469526\navg_ns repair_blocks 32 = 97308\navg_ns fullscan_blocks 32 = 403590\navg_ns repair_blocks 64 = 520753\navg_ns fullscan_blocks 64 = 410928\navg_ns = 410928\n",
+  "output_canonical": "task = incremental_search\nvectors = 512  dims = 64  block_size = 8  blocks = 64  k = 8\nbatches_checked = 150\nmismatches = 0\nfinal_top_idx 0 = 23\nfinal_top_idx 1 = 46\nfinal_top_idx 2 = 69\nfinal_top_idx 3 = 92\nfinal_top_idx 4 = 115\nfinal_top_idx 5 = 138\nfinal_top_idx 6 = 161\nfinal_top_idx 7 = 184\n"
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "baseline": null,
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash bundle, rebuild from bundled source, re-run, compare output hash",
+  "verifier": "verify.py v0.1"
+ },
+ "oracle": {
+  "status": "pass",
+  "twin_file": "oracle_twin.ijs",
+  "twin_sha256": "6ac8c63ac8c96c39f4ee8be9ec85498ac527d90fef7a8250d23b88256703eb98",
+  "twin_source": "oracle/twins/incremental_search.ijs",
+  "engine": "J 9.6 (jconsole, arena-bundled oracle/j9.6)",
+  "bands": "integers exact; floats |diff| <= 1e-4 (pre-registered 2026-11-25)",
+  "checks": [
+   {
+    "key": "final_top_idx 0",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=23 twin=23"
+   },
+   {
+    "key": "final_top_idx 1",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=46 twin=46"
+   },
+   {
+    "key": "final_top_idx 2",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=69 twin=69"
+   },
+   {
+    "key": "final_top_idx 3",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=92 twin=92"
+   },
+   {
+    "key": "final_top_idx 4",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=115 twin=115"
+   },
+   {
+    "key": "final_top_idx 5",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=138 twin=138"
+   },
+   {
+    "key": "final_top_idx 6",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=161 twin=161"
+   },
+   {
+    "key": "final_top_idx 7",
+    "verdict": "PASS",
+    "detail": "exact int: kernel=184 twin=184"
+   }
+  ],
+  "report_file": "oracle_report.txt"
+ }
+}
