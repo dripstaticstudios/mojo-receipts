@@ -1,0 +1,71 @@
+{
+ "schema": "dss.sar.observation",
+ "schema_version": "0.1",
+ "extension": {
+  "name": "render-job",
+  "version": "0.1"
+ },
+ "observation_id": "d8c44830-db24-4440-a24d-ca5ff6e051e5",
+ "observed_at": "2026-11-24T17:59:00.907226+00:00",
+ "task": {
+  "id": "video_frames",
+  "title": "PIL frame render for Mojo receipts video",
+  "request_sha256": "845a23d5d8185d68e8d4d74293b80d340c0b149b0216fb0fb8add1ae89f24852"
+ },
+ "generator": {
+  "kind": "agent",
+  "model_id": "Duckie (Muse, in-session agent loop)"
+ },
+ "engine": {
+  "name": "Python PIL",
+  "version": "10.2.0"
+ },
+ "artifacts": {
+  "script_file": "stage_frames.py",
+  "script_sha256": "18baf6603f75577bff7408d15ff3bc30f0680fdfec42954cf6a71fe2064b41c8",
+  "inputs": [
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/bars.json",
+    "sha256": "7e7d09694bae1b445e4783043ccca3f8eda9d299eb2a594ad3a25b5f14c70676"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/curve.json",
+    "sha256": "83b4306623c2f1c6d4be60476663fd648bb4bc1af62b47806614efa253f7dd55"
+   },
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/narration.json",
+    "sha256": "c2d058c9420626b154393c7b97368a452e5f4d52adceeafc79e3af41a7d3d729"
+   }
+  ],
+  "command": [
+   "python3",
+   "stage_frames.py"
+  ],
+  "outputs": [
+   {
+    "path": "/home/hatch/workspace/mojo-arena/video-pipeline/work/frames_manifest.json",
+    "sha256": "dc83e5c93e4d33f51847e9154815ee2d04f0370fb979c5c136000066784ffe1a",
+    "bytes": 152732
+   }
+  ]
+ },
+ "facts": {
+  "frame_count": 2176,
+  "frames_concat_sha256": "a5449478383340d7c5ff7188da9a438ba9285ffc389b9238f0a4d23e5cdf2e91",
+  "frames_dir": "/home/hatch/workspace/mojo-arena/video-pipeline/work/frames",
+  "total_s": 72.532917
+ },
+ "environment": {
+  "host": "duckie-vm",
+  "os": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+  "cpus": 4
+ },
+ "provenance": {
+  "produced_by": "Duckie for Dripstatic Studios",
+  "training_use": "none \u2014 evaluation artifact (teacher bright line)"
+ },
+ "verification": {
+  "method": "rehash script/inputs/outputs and compare; deterministic stages re-run and output-compared",
+  "verifier": "verify_render.py v0.1"
+ }
+}
