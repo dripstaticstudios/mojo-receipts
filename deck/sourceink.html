@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SourceInk — Dripstatic Studios</title>
+<meta name="description" content="SourceInk is Dripstatic Studios' hand-copy drawing reference companion: a reference beside your drawing, pen input treated as first-class.">
+<style>
+  :root{
+    --bg:#0a0a0f; --panel:#12121c; --panel2:#171726; --ink:#f2f2f5; --muted:#a7a7b8;
+    --accent:#35e08a; --amber:#fbbf24; --line:#262638;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent)}
+  header.site{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+    padding:1rem clamp(1.25rem,6vw,5rem);border-bottom:1px solid var(--line);max-width:1200px;margin:0 auto}
+  header.site .brand{font-weight:800;letter-spacing:.04em}
+  main{max-width:1200px;margin:0 auto;padding:0 clamp(1.25rem,6vw,5rem) 4rem}
+  section{padding:3.5rem 0 1rem}
+  .kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.8rem;font-weight:700;margin:0 0 1rem}
+  .kicker.amber{color:var(--amber)}
+  h1{font-size:clamp(2.6rem,8vw,5rem);line-height:1.02;margin:0 0 1rem}
+  h2{font-size:clamp(1.8rem,4.5vw,3rem);line-height:1.1;margin:0 0 1rem}
+  .lede{font-size:clamp(1.05rem,2.2vw,1.35rem);color:var(--muted);max-width:44rem;line-height:1.55}
+  .row{display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:1.4rem;flex:1 1 280px}
+  .card h3{margin:.2rem 0 .6rem;font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em}
+  .card p{color:var(--muted);line-height:1.55}
+  .direction{border:1px dashed var(--amber);border-radius:1rem;padding:1.4rem;background:var(--panel)}
+  .direction p{color:var(--muted);line-height:1.6;max-width:46rem}
+  .direction b{color:var(--ink)}
+  .tag{display:inline-block;color:var(--amber);border:1px solid var(--amber);border-radius:2rem;
+    padding:.2rem .8rem;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  footer{border-top:1px solid var(--line);padding:1.5rem clamp(1.25rem,6vw,5rem);max-width:1200px;margin:0 auto;
+    color:var(--muted);font-size:.9rem;display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:space-between}
+  .stroke{width:100%;height:auto;display:block}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <span class="brand">SOURCEINK · DRIPSTATIC STUDIOS</span>
+  <nav aria-label="Site"><a href="index.html">← Back to The Mojo Edge deck</a></nav>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section aria-label="Introduction">
+    <p class="kicker">Dripstatic Studios · Drawing</p>
+    <h1>SourceInk</h1>
+    <p class="lede">A hand-copy drawing reference companion. You lay a reference beside your drawing and copy it by hand — SourceInk is the companion surface that holds the reference while your hand does the learning.</p>
+    <svg class="stroke" viewBox="0 0 900 120" role="img" aria-label="A single sweeping ink stroke">
+      <path d="M10 90 C 180 10, 320 110, 470 55 S 760 20, 890 70" fill="none" stroke="#35e08a" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="10" cy="90" r="7" fill="#35e08a"/>
+    </svg>
+  </section>
+
+  <!-- What it is -->
+  <section aria-label="What SourceInk is">
+    <h2>The companion, not the shortcut</h2>
+    <div class="row">
+      <div class="card">
+        <h3>Reference beside the work</h3>
+        <p>Hand-copying is a deliberate way to learn: the reference sits beside your drawing, and you copy it by hand. SourceInk exists to be that beside-the-drawing surface.</p>
+      </div>
+      <div class="card">
+        <h3>Your hand does the drawing</h3>
+        <p>SourceInk is a companion for the practice — it serves the copying, it doesn't do the copying for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pen first -->
+  <section aria-label="Pen input">
+    <h2>Pen input is first-class</h2>
+    <p class="lede">Built-in pen support is a market gap most drawing apps ignore. SourceInk's stance is the opposite: pen input is treated as first-class — the pen is the primary way you work, not an afterthought bolted onto a touch interface.</p>
+  </section>
+
+  <!-- Mojo direction -->
+  <section aria-label="The Mojo angle">
+    <p><span class="tag">Direction · Exploration — not a shipped feature</span></p>
+    <h2 style="margin-top:1rem">The Mojo angle: ink at kernel speed</h2>
+    <div class="direction">
+      <p><b>Direction, clearly labeled:</b> the Mojo Edge Program proved — with receipts — that a compiled Mojo engine can search vectors fast, and repair a search index instead of rescanning it. The exploration for SourceInk is whether that same engine room applies to ink: <b>ink stroke processing, and searching thousands of your own strokes and pages the way the arena searched vectors.</b></p>
+      <p>That is an exploration direction, not a shipped SourceInk feature, and this page makes no performance claim for it. The measured numbers live in the deck, each with its receipt — nothing here borrows them.</p>
+      <p><a href="index.html">See the receipted results in The Mojo Edge deck →</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>SourceInk · Dripstatic Studios · Local and private.</span>
+  <a href="index.html">The Mojo Edge deck</a>
+</footer>
+
+</body>
+</html>

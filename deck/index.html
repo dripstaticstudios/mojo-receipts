@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mojo Edge — Dripstatic Studios</title>
+<meta name="description" content="A slide deck whose every number carries a verifier-passed receipt: Mojo vs C++ kernel bouts from the Dripstatic Studios Mojo arena. Local and private.">
+<style>
+  :root{
+    --bg:#0a0a0f; --panel:#12121c; --panel2:#171726; --ink:#f2f2f5; --muted:#a7a7b8;
+    --accent:#35e08a; --sky:#38bdf8; --amber:#fbbf24; --line:#262638;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  a{color:var(--accent)}
+  /* Deck shell: one slide visible at a time, full-screen sections */
+  .deck{position:relative;min-height:100vh}
+  .slide{display:none;min-height:100vh;padding:4.5rem clamp(1.25rem,6vw,5rem) 6rem;
+    flex-direction:column;justify-content:center;max-width:1200px;margin:0 auto;width:100%}
+  .slide.active{display:flex}
+  .kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.8rem;font-weight:700;margin:0 0 1rem}
+  .kicker.sky{color:var(--sky)} .kicker.amber{color:var(--amber)}
+  h1{font-size:clamp(2.6rem,8vw,5.5rem);line-height:1.02;margin:0 0 1rem}
+  h2{font-size:clamp(1.9rem,5vw,3.4rem);line-height:1.08;margin:0 0 1rem}
+  .lede{font-size:clamp(1.05rem,2.2vw,1.4rem);color:var(--muted);max-width:44rem;line-height:1.55;margin:0 0 1.5rem}
+  .big{font-size:clamp(2.2rem,6vw,4.2rem);font-weight:800;line-height:1.05}
+  .receipt{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.6rem;margin-top:2rem;max-width:52rem}
+  .receipt code{color:var(--ink);background:var(--panel2);padding:.1em .4em;border-radius:.3em}
+  /* Flex rows + grid panels (MDN flexbox / grid patterns) */
+  .row{display:flex;gap:1rem;flex-wrap:wrap}
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:stretch;margin:1rem 0}
+  @media (max-width:720px){.vs{grid-template-columns:1fr}.vs .mid{align-self:center}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:1.4rem;flex:1 1 260px}
+  .card h3{margin:.2rem 0 .6rem;font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em}
+  .card.mojo{border-top:4px solid var(--accent)} .card.cpp{border-top:4px solid var(--sky)}
+  .num{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;font-variant-numeric:tabular-nums}
+  .num small{font-size:1rem;color:var(--muted);font-weight:600}
+  .win{color:var(--accent);font-weight:700}
+  .mid{display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);font-size:1.3rem}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1rem 0}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:.8rem;padding:1rem}
+  .step b{display:block;color:var(--accent);margin-bottom:.4rem}
+  table{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.92rem;width:100%}
+  th,td{border-bottom:1px solid var(--line);padding:.45rem .6rem;text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  .scrollx{overflow-x:auto}
+  ul.tight{line-height:1.65;color:var(--muted);max-width:46rem}
+  ul.tight b{color:var(--ink)}
+  .note{background:var(--panel);border-left:4px solid var(--amber);border-radius:.5rem;padding:1rem 1.2rem;max-width:46rem;color:var(--muted);line-height:1.55}
+  .note b{color:var(--ink)}
+  /* Deck chrome */
+  .chrome{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:1rem;
+    padding:.7rem 1rem;background:rgba(10,10,15,.92);border-top:1px solid var(--line);z-index:10}
+  .chrome button{background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+    border-radius:.6rem;padding:.55rem 1.1rem;font-size:1rem;cursor:pointer}
+  .chrome button:hover{border-color:var(--accent)}
+  .counter{font-variant-numeric:tabular-nums;color:var(--muted)}
+  .bar{flex:1;height:6px;background:var(--panel2);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);width:0}
+  .tapzone{position:fixed;top:0;bottom:3.5rem;width:12vw;z-index:5;background:transparent;border:0;cursor:pointer}
+  .tapzone.prev{left:0}.tapzone.next{right:0}
+  figure{margin:0} figcaption{color:var(--muted);font-size:.85rem;margin-top:.5rem}
+  .legend{display:flex;gap:1.2rem;flex-wrap:wrap;font-size:.9rem;color:var(--muted);margin:.6rem 0}
+  .sw{display:inline-block;width:1.6rem;height:0;border-top:4px solid var(--accent);vertical-align:middle;margin-right:.4rem}
+  .sw.dash{border-top-style:dashed}.sw.sky{border-top-color:var(--sky)}
+</style>
+</head>
+<body>
+<header class="chrome" aria-label="Deck controls">
+  <button type="button" id="prevBtn" aria-label="Previous slide">← Prev</button>
+  <span class="counter" id="counter" aria-live="polite">1 / 15</span>
+  <div class="bar" aria-hidden="true"><i id="progress"></i></div>
+  <button type="button" id="nextBtn" aria-label="Next slide">Next →</button>
+</header>
+<button type="button" class="tapzone prev" id="tapPrev" aria-label="Previous slide"></button>
+<button type="button" class="tapzone next" id="tapNext" aria-label="Next slide"></button>
+
+<main class="deck" id="deck">
+
+<!-- 1 · TITLE -->
+<section class="slide" aria-label="Title">
+  <p class="kicker">Dripstatic Studios · Mojo Edge Program</p>
+  <h1>The Mojo Edge</h1>
+  <p class="lede">A website whose numbers are computed by a native Mojo engine and proven by receipts — rehashed, rebuilt, re-run, and matched. The engine runs natively; this page is its browser face. If a receipt doesn't prove it, this deck doesn't print it.</p>
+  <p class="lede">Measured once, honestly: Mojo 1.2.0 · g++ 13.3.0 -O3 · Duckie VM · CPU x86-64. All receipts in this deck PASS <code>verify.py</code>.</p>
+  <p class="receipt">Receipt bundles live in <code>~/workspace/mojo-arena/receipts/</code>. Verification = rehash → rebuild → re-run → output-hash match. Local and private — nothing on this page was published.</p>
+</section>
+
+<!-- 2 · FRAMING: A WEBSITE WITH A MOJO ENGINE ROOM -->
+<section class="slide" aria-label="A website with a Mojo engine room">
+  <p class="kicker">The idea · 1 of 3</p>
+  <h2>A website with a Mojo engine room</h2>
+  <p class="lede">Sites are normally JavaScript and framework stacks all the way down. Here the split is different:</p>
+  <div class="row">
+    <div class="card mojo"><h3>The engine room</h3><p>A compiled Mojo binary does the compute — the kernels on the slides ahead.</p></div>
+    <div class="card"><h3>The face</h3><p>The page is a thin face over that engine: plain HTML, CSS, and JavaScript. No framework, no CDN — this deck included.</p></div>
+  </div>
+  <p class="lede" style="margin-top:1.5rem">This very deck's numbers were produced that way: Mojo kernels ran, receipts were issued, and the page only reports what the receipts prove.</p>
+</section>
+
+<!-- 3 · FRAMING: A CHAT THAT COMPILES -->
+<section class="slide" aria-label="A chat that compiles">
+  <p class="kicker">The idea · 2 of 3</p>
+  <h2>A chat that compiles</h2>
+  <p class="lede">The Phase 1 wrapper spike: you ask in plain language, and the answer comes back with proof the work actually ran.</p>
+  <div class="steps">
+    <div class="step"><b>1 · Request</b>A task arrives in chat.</div>
+    <div class="step"><b>2 · Source</b>An agent writes Mojo source for it, on demand.</div>
+    <div class="step"><b>3 · Compile</b>The harness compiles the source — no thinking in the harness, it is mechanical.</div>
+    <div class="step"><b>4 · Run</b>The binary runs on deterministic inputs.</div>
+    <div class="step"><b>5 · Receipt</b>The run issues a cryptographic receipt.</div>
+    <div class="step"><b>6 · Answer</b>The answer returns with the receipt, independently verified.</div>
+  </div>
+  <p class="lede">Demo numbers for this loop are on the wrapper slide ahead — each with its own receipt.</p>
+</section>
+
+<!-- 4 · FRAMING: EXACT SEARCH THAT REPAIRS -->
+<section class="slide" aria-label="Exact search that repairs instead of rescanning">
+  <p class="kicker">The idea · 3 of 3</p>
+  <h2>Exact search that repairs instead of rescanning</h2>
+  <p class="lede">The incremental thesis: split a corpus into blocks, cache each block's best results, and when something changes, <b style="color:var(--ink)">recompute only the touched blocks and merge</b> — instead of rescanning everything.</p>
+  <ul class="tight">
+    <li><b>Exact, not approximate:</b> every repair is checked against a brute-force full scan.</li>
+    <li><b>The question is where it stops paying:</b> repair cost grows with the number of touched blocks; a full scan stays roughly flat. The crossover slide measures exactly where they meet.</li>
+  </ul>
+</section>
+
+<!-- 5 · SOFTMAX -->
+<section class="slide" aria-label="Softmax: Mojo vs C++">
+  <p class="kicker">Bout 1 · Softmax — 1,024 values</p>
+  <h2>Softmax: Mojo takes the first bout</h2>
+  <div class="vs">
+    <div class="card mojo"><h3>Mojo</h3><p class="num">7,589 <small>ns</small></p><p class="win">~6% faster</p></div>
+    <div class="mid">vs</div>
+    <div class="card cpp"><h3>C++</h3><p class="num">8,039 <small>ns</small></p><p>Same task, same machine.</p></div>
+  </div>
+  <p class="lede">Softmax over 1,024 values. The first arena bout — and the narrowest win in the program. One task, one machine, one compiler version each; it proves the bout, not a universal claim.</p>
+  <p class="receipt">Receipts: <code>softmax-mojo-6520ec25</code> · <code>softmax-cpp-7cc26262</code> — both PASS verify.py. Mojo 1.2.0 · g++ 13.3.0 -O3 · Duckie VM · CPU x86-64.</p>
+</section>
+
+<!-- 6 · EMBED SEARCH -->
+<section class="slide" aria-label="Embed search: Mojo vs C++">
+  <p class="kicker">Bout 2 · Embed search — cosine top-1, 512 vectors × 64 dims</p>
+  <h2>Embed search: the gap widens</h2>
+  <div class="vs">
+    <div class="card mojo"><h3>Mojo</h3><p class="num">134,079 <small>ns</small></p><p class="win">~1.34× faster</p></div>
+    <div class="mid">vs</div>
+    <div class="card cpp"><h3>C++</h3><p class="num">179,702 <small>ns</small></p><p>Same corpus, same query.</p></div>
+  </div>
+  <p class="lede">Cosine top-1 search over 512 vectors × 64 dimensions. The same arena setup the incremental design later builds on — so this bout is the baseline everything after it is measured against.</p>
+  <p class="receipt">Receipts: <code>embed_search-mojo-d083e8a4</code> · <code>embed_search-cpp-95f25de4</code> — both PASS verify.py. Mojo 1.2.0 · g++ 13.3.0 -O3 · Duckie VM · CPU x86-64.</p>
+</section>
+
+<!-- 7 · FUSED -->
+<section class="slide" aria-label="Fused search plus softmax: Mojo vs C++">
+  <p class="kicker">Bout 3 · Fused search + softmax — one pass vs two stages</p>
+  <h2>One fused pass beats the pipeline</h2>
+  <div class="vs">
+    <div class="card mojo"><h3>Mojo fused</h3><p class="num">127,693 <small>ns</small></p><p class="win">~1.18× faster than C++ fused</p></div>
+    <div class="mid">vs</div>
+    <div class="card cpp"><h3>C++ fused</h3><p class="num">150,112 <small>ns</small></p><p>Same fused design.</p></div>
+  </div>
+  <p class="lede">Search and softmax in one fused pass instead of a two-stage pipeline. The fused output was verified identical to the unfused pipeline in <b style="color:var(--ink)">both</b> engines — the fusion saves time without changing the answer.</p>
+  <p class="receipt">Receipts: <code>fused_search_softmax-mojo-b41d8cb9</code> · <code>fused_search_softmax-cpp-bba44eea</code> — both PASS verify.py. Mojo 1.2.0 · g++ 13.3.0 -O3 · Duckie VM · CPU x86-64.</p>
+</section>
+
+<!-- 8 · INCREMENTAL CORRECTNESS -->
+<section class="slide" aria-label="Incremental exact search: correctness">
+  <p class="kicker">Bout 4 · Incremental exact top-k search — correctness</p>
+  <h2>150 / 150. Both engines earned the tie.</h2>
+  <div class="row">
+    <div class="card mojo"><h3>Mojo</h3><p class="num">150 / 150</p><p>edit batches exact · 0 mismatches</p></div>
+    <div class="card cpp"><h3>C++</h3><p class="num">150 / 150</p><p>edit batches exact · 0 mismatches</p></div>
+  </div>
+  <p class="lede">512 vectors in 64 blocks of 8. Every repair was checked against a brute-force full scan — same indices, same order, scores within 1e-5. The design is the point here, not a language win: the incremental thesis holds in both languages. Both engines ended on the identical final top-8 indices: 23, 46, 69, 92, 115, 138, 161, 184.</p>
+  <p class="receipt">Receipts: <code>incremental_search-mojo-61164680</code> · <code>incremental_search-cpp-6679e92c</code> — both PASS verify.py. Batches of 1–6 edits, accumulating across batches, over a heavily-edited corpus.</p>
+</section>
+
+<!-- 9 · CROSSOVER CHART -->
+<section class="slide" aria-label="Crossover chart: repair vs full scan">
+  <p class="kicker amber">The money visual · Repair vs full scan, ns per op</p>
+  <h2>Repair wins until it doesn't</h2>
+  <figure>
+    <svg viewBox="0 0 900 520" width="100%" role="img" aria-label="Line chart: repair cost rises with blocks touched while full-scan cost stays flat; Mojo repair crosses its scan line near 48 blocks, C++ repair near 51 blocks.">
+      <rect x="0" y="0" width="900" height="520" fill="#12121c"/>
+      <g stroke="#262638" stroke-width="1">
+        <line x1="90" y1="460" x2="860" y2="460"/><line x1="90" y1="360" x2="860" y2="360"/>
+        <line x1="90" y1="260" x2="860" y2="260"/><line x1="90" y1="160" x2="860" y2="160"/>
+        <line x1="90" y1="60" x2="860" y2="60"/>
+      </g>
+      <g fill="#a7a7b8" font-size="13" font-family="system-ui,sans-serif">
+        <text x="82" y="464" text-anchor="end">0</text><text x="82" y="364" text-anchor="end">50k</text>
+        <text x="82" y="264" text-anchor="end">100k</text><text x="82" y="164" text-anchor="end">150k</text>
+        <text x="82" y="64" text-anchor="end">200k</text>
+      </g>
+      <rect x="806.7369" y="40" width="11.2244" height="420" fill="#fbbf24" opacity="0.12"/>
+      <g fill="none" stroke-width="3" stroke-linejoin="round">
+        <polyline points="90.0,213.5 218.3,203.1 346.7,182.4 475.0,149.4 603.3,149.4 731.7,161.1 860.0,158.4" stroke="#35e08a" stroke-dasharray="7 6" opacity="0.85"/>
+        <polyline points="90.0,151.8 218.3,153.5 346.7,152.3 475.0,147.6 603.3,153.8 731.7,142.1 860.0,147.6" stroke="#38bdf8" stroke-dasharray="7 6" opacity="0.85"/>
+        <polyline points="90.0,430.9 218.3,425.4 346.7,413.4 475.0,389.7 603.3,344.5 731.7,245.7 860.0,71.7" stroke="#35e08a"/>
+        <polyline points="90.0,443.6 218.3,437.2 346.7,425.6 475.0,403.2 603.3,355.8 731.7,265.1 860.0,67.4" stroke="#38bdf8"/>
+      </g>
+      <g fill="#f2f2f5" font-size="13" font-family="system-ui,sans-serif" text-anchor="middle">
+        <text x="90" y="486">1</text><text x="218.3" y="486">2</text><text x="346.7" y="486">4</text>
+        <text x="475" y="486">8</text><text x="603.3" y="486">16</text><text x="731.7" y="486">32</text><text x="860" y="486">64</text>
+        <text x="475" y="512">blocks touched (log scale)</text>
+      </g>
+    </svg>
+    <figcaption style="font-size:1rem;line-height:1.5"><strong style="color:var(--amber)">Estimated crossover</strong> · Repair and a full scan cost about the same at 48 of 64 blocks for Mojo (75%) and 51 for C++ (80%). Both estimates come from the measurements at 32 and 64 blocks. The horizontal axis uses a log scale.</figcaption>
+  </figure>
+  <div class="legend">
+    <span><i class="sw"></i>Mojo repair</span><span><i class="sw dash"></i>Mojo full scan</span>
+    <span><i class="sw sky"></i>C++ repair</span><span><i class="sw dash sky"></i>C++ full scan</span>
+  </div>
+  <p class="lede" style="margin-bottom:.5rem">With up to half the blocks touched, repair cost less than a full scan in both languages and returned the same results.</p>
+  <details class="scrollx"><summary>Exact table (ns per op)</summary>
+  <table>
+    <tr><th>Blocks touched</th><th>Mojo repair</th><th>Mojo scan</th><th>C++ repair</th><th>C++ scan</th></tr>
+    <tr><td>1</td><td>14,538</td><td>123,242</td><td>8,208</td><td>154,076</td></tr>
+    <tr><td>2</td><td>17,279</td><td>128,475</td><td>11,402</td><td>153,268</td></tr>
+    <tr><td>4</td><td>23,302</td><td>138,798</td><td>17,207</td><td>153,871</td></tr>
+    <tr><td>8</td><td>35,135</td><td>155,282</td><td>28,400</td><td>156,194</td></tr>
+    <tr><td>16</td><td>57,755</td><td>155,304</td><td>52,105</td><td>153,085</td></tr>
+    <tr><td>32</td><td>107,145</td><td>149,468</td><td>97,461</td><td>158,963</td></tr>
+    <tr><td>64</td><td>194,156</td><td>150,798</td><td>196,301</td><td>156,196</td></tr>
+  </table></details>
+  <p class="receipt">Receipts: <code>incremental_search-mojo-61164680</code> · <code>incremental_search-cpp-6679e92c</code> — both PASS verify.py. Mojo 1.2.0 · g++ 13.3.0 -O3 · Duckie VM · CPU x86-64.</p>
+</section>
+
+<!-- 10 · SCALE: NATIVE 1M -->
+<section class="slide" aria-label="Scale test: exact repair at a million passages">
+  <p class="kicker">Scale · The same repair at a million passages — native Mojo, real text</p>
+  <h2>Exact repair for sparse edits. At 1,000,384 passages.</h2>
+  <p class="lede">One edit lands and the answer repairs instead of rescanning: <b style="color:var(--ink)">5.09 ms</b> at a million passages, against a <b style="color:var(--ink)">926 ms</b> full rescan. At 100,224 passages the same repair is <b style="color:var(--ink)">0.58 ms</b> (scan: 88 ms); eight sparse edits cost 5.62 ms / 1.08 ms. Every trial was refereed by a fresh full scan — <b style="color:var(--ink)">32 / 32 exact</b>, top-10 identical, max score delta 0.0. The edits are real text, and the clock includes turning each edit into a vector — about <b style="color:var(--ink)">26 µs per passage</b> — the cost a pre-made-vector benchmark never pays.</p>
+  <p class="lede">Where it loses: touch half the blocks and the total blows the 50 ms cutoff at both scales — <b style="color:var(--ink)">72.9 ms</b> at 100K, <b style="color:var(--ink)">748.6 ms</b> at 1M. Embedding is 38% of the 100K broad total; repair alone (45.5 ms) would have passed. At 1M broad, repair still beats rescanning — but thin. And a brand-new query costs a full cache build: 92.5 ms / 889 ms.</p>
+  <p class="receipt">Receipts: <code>scale_repair_100k-mojo-5333dab7</code> · <code>scale_repair_1m-mojo-55e42a9a</code> — both PASS verify.py. Corpus: the 1,856 real passages tiled to scale (near-duplicates — construction disclosed in the test report); idf recomputed per scale. J-oracle exempt, reason recorded on the receipts; the full scan refereed every trial in-program. Mojo 1.2.0 · Duckie VM · peak memory at 1M: 2,038 MB.</p>
+</section>
+
+<!-- 11 · ATTEMPT 1 HONESTY -->
+<section class="slide" aria-label="Attempt one failed, and the record kept it">
+  <p class="kicker amber">The honesty slide</p>
+  <h2>Attempt 1 failed — and the record kept it</h2>
+  <p class="big">104 / 150 <span style="color:var(--muted);font-size:1.4rem">batches matched. Gate failed.</span></p>
+  <ul class="tight">
+    <li><b>Root cause was the test harness, not the design.</b> The edit formula <code>(i*13 + j*29 + salt*7) % 29</code> makes the j-term vanish (29j ≡ 0 mod 29), so every edited vector was constant across dims.</li>
+    <li><b>One edit made an exactly-zero vector.</b> Its cosine is NaN, and NaN breaks the total order inside insertion — repair and scan diverged. The cache audit was blind to it, because NaN − NaN comparisons are false.</li>
+    <li><b>Fix:</b> edit formula changed to the base formula's family, <code>(i*7 + j*11 + salt*5) % 23 − 11) / 11</code>, which varies over j and cannot produce a zero vector.</li>
+    <li><b>Result: 150 / 150</b> in both languages. The failed sources are preserved in the repo — failures stay in the record. That's a feature of the program, not a footnote to hide.</li>
+  </ul>
+  <p class="receipt">Failed sources preserved: <code>kernels/incremental_search_attempt1.{mojo,cpp}</code>. Passing receipts: <code>incremental_search-mojo-61164680</code> · <code>incremental_search-cpp-6679e92c</code>.</p>
+</section>
+
+<!-- 12 · WRAPPER DEMO -->
+<section class="slide" aria-label="Wrapper demo: the chat that compiles, receipted">
+  <p class="kicker">Phase 1 · The wrapper, demonstrated</p>
+  <h2>The chat wrote code. The receipts prove it ran.</h2>
+  <div class="row">
+    <div class="card mojo"><h3>logsumexp — new, on demand</h3><p class="num">16,388 <small>ns</small></p><p>Numerically stable log-sum-exp over 2,048 values.</p><p class="receipt">Receipt: <code>logsumexp-mojo-fca187be</code> — PASS</p></div>
+    <div class="card mojo"><h3>top2_margin — new, on demand</h3><p class="num">136,562 <small>ns</small></p><p>Top-2 cosine margin over the 512-vector corpus.</p><p class="receipt">Receipt: <code>top2_margin-mojo-9f2502bc</code> — PASS</p></div>
+    <div class="card"><h3>embed_search — control</h3><p class="num">137,835 <small>ns</small></p><p>The established kernel through the wrapper, same proof path.</p><p class="receipt">Receipt: <code>embed_search-mojo-ca6e5e9f</code> — PASS</p></div>
+  </div>
+  <div class="note" style="margin-top:1rem"><b>The margin was 0.0 — honestly.</b> top2_margin reported margin 0.0 because the synthetic corpus's formula repeats every 23 vectors, making the top score a 23-way tie (best score 0.23181105 at idx 0, runner-up idx 23, identical score). Zero is the honest answer for this corpus; the kernel did its job, and the control run agrees.</div>
+  <p class="receipt">All three receipts PASS verify.py (rehash → rebuild → re-run → output-hash match). Kernel times are kernel self-reported averages, per receipt, single machine (Mojo 1.2.0, Duckie VM). The control's 137,835 ns vs the original bout's 134,079 ns is ordinary run-to-run variance on a shared VM — each receipt stands on its own.</p>
+</section>
+
+<!-- 13 · HONEST WARTS -->
+<section class="slide" aria-label="Honest warts">
+  <p class="kicker amber">Honest warts — printed, not hidden</p>
+  <h2>Where the usual stack wins, and where the design breaks even</h2>
+  <ul class="tight">
+    <li><b>C++ repair is faster at small edit counts.</b> At T=1: C++ 8,208 ns vs Mojo 14,538 ns. The fixed merge dominates at low edit counts, and C++'s small-vector handling beats Mojo's List allocation pattern in this implementation. The gap narrows as T grows; at T=64 the two are indistinguishable (196,301 vs 194,156 ns).</li>
+    <li><b>Repair degenerates at T=64.</b> Touching every block, repair costs ~1.27× a full scan in both languages — it becomes rebuild everything plus a merge, and the merge overhead is the entire penalty.</li>
+    <li><b>One machine, one compiler version, shared-VM noise.</b> Mojo full-scan readings ranged 123,242–155,304 ns across levels for identical work. Crossover points (≈48 and ≈51 blocks) are interpolations between measured levels, not direct measurements.</li>
+    <li><b>Scope.</b> Every number in this deck is per-receipt — one task, one machine, one compiler version. None of it is a universal claim about Mojo or C++.</li>
+  </ul>
+  <p class="note"><b>On Java:</b> No Java column exists — not because Java lost, but because no verified Java run was ever produced for this table; this deck only prints what a receipt proves.</p>
+  <p class="receipt">Sources for this slide: <code>incremental_search-mojo-61164680</code> · <code>incremental_search-cpp-6679e92c</code>, and the incremental results write-up in <code>~/workspace/mojo-arena/incremental/RESULTS.md</code>.</p>
+</section>
+
+<!-- 14 · WHAT THE DESIGN BUYS -->
+<section class="slide" aria-label="What the design buys">
+  <p class="kicker">The takeaway</p>
+  <h2>The win is the design, in both languages</h2>
+  <p class="lede">Mojo took the kernel bouts — softmax ~6%, embed search ~1.34×, fused ~1.18×. But the deeper result is language-independent:</p>
+  <p class="big">Repair, don't rescan —<br>exactly, and provably.</p>
+  <p class="lede">Up to half the corpus edited, repair is strictly cheaper than a full scan in both engines, with results verified exact batch by batch. A compiled engine room makes that design usable from a web page and a chat — with a receipt attached to every claim.</p>
+  <p class="receipt">Bout receipts: <code>softmax-mojo-6520ec25</code> / <code>softmax-cpp-7cc26262</code> · <code>embed_search-mojo-d083e8a4</code> / <code>embed_search-cpp-95f25de4</code> · <code>fused_search_softmax-mojo-b41d8cb9</code> / <code>fused_search_softmax-cpp-bba44eea</code> · <code>incremental_search-mojo-61164680</code> / <code>incremental_search-cpp-6679e92c</code> — all PASS verify.py.</p>
+</section>
+
+<!-- 15 · CLOSING -->
+<section class="slide" aria-label="The Impossible App results">
+  <p class="kicker">Phase 4 · Verified result</p>
+  <h2>The Impossible App</h2>
+  <p class="lede">The Mojo engine searched <strong>1,856 passages</strong> from <i>Pride and Prejudice</i>, <i>Frankenstein</i>, and <i>The Art of War</i>. For the recorded query, incremental repair returned the same top 10 passages in the same order as a full scan after each of <strong>60 edit batches</strong>.</p>
+  <div class="row">
+    <div class="card mojo"><h3>SourceInk</h3><p>Dripstatic Studios' drawing companion — and the next surface for the Mojo angle: ink, searched at kernel speed. Clearly labeled direction, not a shipped feature.</p><p><a href="sourceink.html">Visit the SourceInk page →</a></p></div>
+  </div>
+  <p class="receipt">Native Mojo receipt <code>corpus_search-mojo-24f1ff8d</code> · 60/60 exact · 0 mismatches. Mojo 1.2.0 · Duckie VM · CPU x86-64. The Mojo Edge · Dripstatic Studios · Local and private.</p>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var counter=document.getElementById('counter'), progress=document.getElementById('progress');
+  var cur=0;
+  function show(i){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach(function(s,j){s.classList.toggle('active',j===cur);});
+    counter.textContent=(cur+1)+' / '+slides.length;
+    progress.style.width=((cur+1)/slides.length*100)+'%';
+    if(history.replaceState) history.replaceState(null,'','#'+(cur+1));
+    window.scrollTo(0,0);
+  }
+  function next(){show(cur+1);} function prev(){show(cur-1);}
+  document.getElementById('nextBtn').addEventListener('click',next);
+  document.getElementById('prevBtn').addEventListener('click',prev);
+  document.getElementById('tapNext').addEventListener('click',next);
+  document.getElementById('tapPrev').addEventListener('click',prev);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+    else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(slides.length-1);}
+  });
+  var h=parseInt((location.hash||'').slice(1),10);
+  show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>
